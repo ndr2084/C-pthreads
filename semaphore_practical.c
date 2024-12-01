@@ -12,6 +12,7 @@
 //DECLARE MUTEX || BARRIER || SEMAPHORE
 sem_t user;
 
+
 void* routine(void* args){
   printf("waiting queue for login: %d\n", *(int*)args);
   sem_wait(&user); //CRITICAL SECTION --
