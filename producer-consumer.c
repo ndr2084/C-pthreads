@@ -13,6 +13,14 @@
         -one semaphore to keep track of elements entering buffer
         -another semaphore to keep track of elements leaving buffer
         -the value of sem_t full and sem_t empty should always be 10 at any point in time after any wait/post block
+
+  [2] PROPERTIES OF SEMAPHORES:
+        - sem_t(sem_t *name, int pshare, unsigned int value)
+            - name is the ADDRESS OF semaphore
+            - pshare is the NUMBER OF PROCESSES that are shared amongst the threads. 0 implies all threads belong to a single process
+            - value is NUMBER OF THREADS ALLOWED INTO CRITICAL SECTION
+            - sem_wait will DECREASE the current value of value
+            - sem_post will INCREASE the current value of value
  */
 
 //DECLARE MUTEX AND SEMAPHORES
@@ -27,11 +35,13 @@ void* producer(void* args){
   //producing data
   while (1) {
     int data = rand() % 30;
-    sem_wait(&empty);
+    sem_wait(&empty); //DECREASE
+
     pthread_mutex_lock(&mutex);//CRITICAL BEGIN
     buffer[count] = data;
     count++;
     pthread_mutex_unlock(&mutex);//CRITICAL END
+
     sem_post(&full);
   }
 }
@@ -45,6 +55,7 @@ void* consumer(void* args) {
     int data = buffer[count - 1];
     count--;
     pthread_mutex_unlock(&mutex);//CRITICAL END
+
     sem_post(&empty);
 
     printf("consuming data nom nom: %d\n", data);
