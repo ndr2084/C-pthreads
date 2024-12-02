@@ -7,7 +7,7 @@
 /*EXPLANATION OF CODE:
   -binary sem's can be a more convenient way of ensuring a task is completed
   -it can give the benefits of both a barrier and a mutex
-  -the thread will not evaporate until fuel has been added, since sem_wait !< 0
+  -the thread will not evaporate until fuel has been added, since sem_wait cannot be less than 0
     -it must collect a coin from sem_post before it terminates
     -to get this coin, the thread must visit get_fuel function
  */
