@@ -8,7 +8,7 @@ pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 /*Explanation:
   -pthread_mutex_lock(&mutex) will wait indefinitely until the lock is released
   -pthread_mutex_trylock(&mutex) will try to gain access to critical area
-      -if critical area access is denied, then move on to something else
+      -if critical area access is denied, then move on to something else OR resolve gracefully
  */
 
 void *routine(void *arg) {
